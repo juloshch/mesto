@@ -1,0 +1,22 @@
+.add-but {
+    width: 150px;
+    height: 50px;
+    background-color: black;
+    border: 1px solid #FFFFFF;
+    align-self: center;
+}
+
+@media screen and (max-width: 900px) {
+    .add-but {
+        width: 105px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .add-but {
+        width: 282px;
+        height: 50px;
+        margin-top: 36px;
+    }
+}
