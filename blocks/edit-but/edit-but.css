@@ -1,0 +1,21 @@
+.edit-but {
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    border: 1px solid #FFFFFF;
+    align-self: flex-end;
+    margin-bottom: 8px;
+}
+
+
+@media screen and (max-width: 449px) {
+    .edit-but {
+        width: 21px;
+        height: 21px;
+        margin-bottom: 17px;
+    }
+
+    .edit-but > img {
+        vertical-align: middle;
+    }
+}
