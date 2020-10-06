@@ -3,8 +3,9 @@
     height: 24px;
     background-color: black;
     border: 1px solid #FFFFFF;
-    align-self: flex-end;
-    margin-bottom: 8px;
+    /* align-self: flex-end; */
+    /* align-self: baseline; */
+    /* margin-bottom: 8px; */
 }
 
 
