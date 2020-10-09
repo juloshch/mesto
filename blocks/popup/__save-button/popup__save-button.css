@@ -4,4 +4,11 @@
     border-radius: 2px;
     color: white;
     margin-top: 48px;
+    border: none;
+}
+
+.popup__save-button:hover {
+    background: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    transition: 0.2s;
 }
