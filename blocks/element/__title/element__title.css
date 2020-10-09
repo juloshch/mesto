@@ -5,4 +5,20 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
 }
+
+/* @media screen and (max-width: 449px) {
+    .element__title {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 29px;
+    }
+}  */
