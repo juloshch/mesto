@@ -6,7 +6,6 @@
     grid-template-columns: repeat(3, 1fr);
     column-gap: 18px;
     row-gap: 21px;
-    /* background-color: white; */
 }
 
 @media screen and (max-width: 768px) {
@@ -16,7 +15,8 @@
     }
 }
 
-@media screen and (max-width: 449px) {
+/* @media screen and (max-width: 449px) { */
+    @media screen and (max-width: 568px) {
     .elements {
         max-width: 282px;
         grid-template-columns: 1fr;

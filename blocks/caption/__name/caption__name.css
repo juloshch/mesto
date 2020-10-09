@@ -4,14 +4,13 @@
     font-style: normal;
     font-weight: 500;
     font-size: 42px;
-    /* line-height: 56px; */
     align-self: flex-end;
     margin-top: 0;
     margin-right: 16px;
     margin-bottom: 0px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 950px) {
     .caption__name {
         font-size: 30px;
     }
@@ -20,7 +19,6 @@
 @media screen and (max-width: 449px) {
     .caption__name {
         font-size: 27px;
-        font-weight: 500;
         line-height: 56px;
     }
 }
