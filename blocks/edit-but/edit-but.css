@@ -1,0 +1,20 @@
+.edit-but {
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    border: 1px solid #FFFFFF;
+}
+
+.edit-but:hover {
+    opacity: 0.6;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+@media screen and (max-width: 449px) {
+    .edit-but {
+        width: 21px;
+        height: 21px;
+        /* margin-bottom: 17px; */
+    }
+}

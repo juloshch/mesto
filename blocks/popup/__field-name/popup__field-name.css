@@ -1,0 +1,9 @@
+.popup__field-name {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    margin-top: 54px;
+
+    font-size: 14px;
+    line-height: 17px;
+}
