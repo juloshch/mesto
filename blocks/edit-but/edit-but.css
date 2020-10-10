@@ -3,12 +3,13 @@
     height: 24px;
     background-color: black;
     border: 1px solid #FFFFFF;
+    transition: 0.2s;
+
 }
 
 .edit-but:hover {
     opacity: 0.6;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 @media screen and (max-width: 449px) {
