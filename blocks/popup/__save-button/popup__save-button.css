@@ -5,10 +5,10 @@
     color: white;
     margin-top: 48px;
     border: none;
+    transition: 0.2s;
 }
 
 .popup__save-button:hover {
     background: rgba(0, 0, 0, 0.8);
     cursor: pointer;
-    transition: 0.2s;
 }

@@ -1,21 +1,21 @@
-.kusto {
+.profile-info__kusto {
     max-width: 169px;
-    max-height: 128px;
+    max-height: 120px;
     border-radius: 50%;
     margin-right: 26px;
 }
 
 @media screen and (max-width: 768px) {
-    .kusto {
+    .profile-info__kusto {
         max-width: 120px;
         max-height: 90px;
     }
 }
 
 @media screen and (max-width: 449px) {
-    .kusto {
+    .profile-info__kusto {
         max-width: 169px;
-        max-height: 128px;
-        border-radius: 50%;
+        max-height: 120px;
+        margin-right: 0px;
     }
 }
