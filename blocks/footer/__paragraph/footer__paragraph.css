@@ -1,5 +1,5 @@
 .footer__paragraph {
-    max-width: 69%;
+    max-width: 882px;
     margin-top: 66px;
     margin-right: auto;
     margin-bottom: 60px;
@@ -13,8 +13,18 @@
     color: #545454;
 }
 
+@media screen and (max-width: 768px) {
+    .footer__paragraph {
+        max-width: 80%;
+    }
+}
+
 @media screen and (max-width: 320px) {
-    .footer {
+    .footer__paragraph {
         max-width: 282px;
+        font-size: 14px;
+        margin-top: 48px;
+        margin-bottom: 10px;
+
     }
 }

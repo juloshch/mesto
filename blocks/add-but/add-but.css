@@ -24,6 +24,13 @@
     .add-but {
         width: 282px;
         height: 50px;
-        margin-top: 36px;
+        margin-top: 22px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .add-but img {
+        width: 16px;
+        height: 16px;
     }
 }

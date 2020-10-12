@@ -1,6 +1,6 @@
 .captions__paragraph {
     color: white;
-    font-family: Inter, arial, sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -11,14 +11,15 @@
 }
 
 @media screen and (max-width: 900px) {
-    .caption__paragraph {
+    .captions__paragraph {
         font-size: 16px;
     }
 }
 
 @media screen and (max-width: 449px) {
-    .caption__paragraph {
+    .captions__paragraph {
         font-size: 14px;
         line-height: 17px;
+        margin-top: 0px;
     }
 }

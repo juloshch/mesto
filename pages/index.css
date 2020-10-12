@@ -1,5 +1,5 @@
-@import url('../styles/normalize.css');
-@import url('../styles/fonts.css');
+@import url('../Vendor/normalize.css');
+@import url('../Vendor/fonts.css');
 @import url('../blocks/page/page.css');
 
 @import url('../blocks/header/header.css');
@@ -29,7 +29,7 @@
 @import url('../blocks/popup/_is-opened/popup_is-opened.css');
 @import url('../blocks/popup/__container/popup__container.css');
 @import url('../blocks/popup/__close-image/popup__close-image.css');
-@import url('../blocks/popup/__conent/__popup__content.css');
+@import url('../blocks/popup/__conent/popup__content.css');
 @import url('../blocks/popup/__title/popup__title.css');
 @import url('../blocks/popup/__field/popup__field.css');
 @import url('../blocks/popup/__line/popup__line.css');

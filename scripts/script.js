@@ -7,22 +7,21 @@ let popupFieldName = document.querySelector(".popup__field_name");
 let popupFieldParagraph = document.querySelector(".popup__field_paragraph");
 let formElement = document.querySelector(".popup__container");
 
-let popupToggle = (evt) => {
-    evt.preventDefault();
+let popupToggle = () => {
     popup.classList.toggle("popup_is-opened");
 }
 
-let openPopup = (evt) => {
+let openPopup = () => {
     popupFieldName.value = captionName.innerText;
     popupFieldParagraph.value = captionParagraph.innerText;
-    popupToggle(evt);
+    popupToggle();
 }
 
 let formSubmitHandler = (evt) => {
     evt.preventDefault();
     captionName.textContent = popupFieldName.value;
     captionParagraph.textContent = popupFieldParagraph.value;
-    popupToggle(evt);
+    popupToggle();
 }
 
 buttonOpenPopup.addEventListener("click", openPopup);
