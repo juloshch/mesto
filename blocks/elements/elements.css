@@ -7,6 +7,13 @@
     row-gap: 21px;
 }
 
+@media screen and (max-width: 1024px) {
+    .elements {
+        max-width: 80%;
+        /* grid-template-columns: repeat(2, 1fr); */
+    }
+}
+
 @media screen and (max-width: 768px) {
     .elements {
         max-width: 80%;
@@ -20,5 +27,13 @@
         grid-template-columns: 1fr;
         row-gap: 20px;
         column-gap: 0px;
+        margin: 36px auto;
+    }
+}
+
+@media screen and (max-width: 319px) {
+    .elements {
+        max-width: 80%;
+        /* grid-template-columns: repeat(2, 1fr); */
     }
 }
