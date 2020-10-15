@@ -2,15 +2,15 @@
     width: 150px;
     height: 50px;
     background-color: black;
-    border: 1px solid #FFFFFF;
+    border: 2px solid #FFFFFF;
     align-self: center;
+    border-radius: 2px;
+    transition: 0.2s;
 }
 
 .add-but:hover {
     opacity: 0.6;
     cursor: pointer;
-    transition: 0.2s;
-
 }
 
 @media screen and (max-width: 900px) {
@@ -24,6 +24,12 @@
     .add-but {
         width: 282px;
         height: 50px;
-        margin-top: 36px;
+        margin-top: 22px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .add-but {
+        width: 80%;
     }
 }

@@ -1,7 +1,10 @@
 .popup__close-image {
     position: absolute;
-    top: -45px;
-    right: -45px;
+    top: -50px;
+    right: -55px;
+    border: none;
+    background-color: transparent;
+    transition: 0.2s;
 }
 .popup__close-image:hover {
     opacity: 0.6;
@@ -10,8 +13,9 @@
 
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 530px) {
     .popup__close-image {
         top: -58px;
-        right: -11px;    }
+        right: -11px;    
+    }
 }
