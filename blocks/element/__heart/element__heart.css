@@ -2,6 +2,11 @@
     border: none;
     background-color: white;
     transition: 0.2s;
+    background-image: url('../../../images/heart.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 21px;
 }
 
 .element__heart:hover {
