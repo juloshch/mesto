@@ -1,0 +1,14 @@
+.element__bin-button {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    width: 17px;
+    height: 24px;
+    margin-top: 24px;
+    margin-left: -48px;
+}
+
+.element__bin-button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
