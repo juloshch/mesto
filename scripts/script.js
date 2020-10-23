@@ -59,6 +59,10 @@ formElement.addEventListener('submit', formSubmitHandler);
 //карточки из массива скриптом плюс из кнопки добавить плюс удалить
 
 const elements = document.querySelector(".elements");
+const showImagePopup = document.querySelector('#image-popup');
+const largeImage = document.querySelector(".popup__image");
+const largeImageTitle = document.querySelector(".popup__image-title");
+
 function createElement(data) {
     const cardTemplate = document.querySelector("#card-template");
     const cardElement = cardTemplate.content.cloneNode(true);
@@ -69,16 +73,31 @@ function createElement(data) {
         const elementItem = currentDeleteButton.closest(".element");
         elementItem.remove();
     });
+
     const likeButton = cardElement.querySelector(".element__heart");
-    likeButton.addEventListener('click', function() {
-        likeButton.classList.toggle("element__heart_liked");
+    likeButton.addEventListener('click', function(evt) {
+        evt.target.classList.toggle('element__heart_liked');
     });
+    // let openPopup = () => {
+    //     popupFieldName.value = captionName.innerText;
+    //     popupFieldParagraph.value = captionParagraph.innerText;
+    //     popupToggle(editProfilePopup);
+    // };
+
+    const viewImage = cardElement.querySelector(".element__pic");
+    viewImage.addEventListener('click', () => {
+        largeImage.src = data.link;
+        largeImageTitle.textContent = data.name;
+        popupToggle(showImagePopup);
+    });
+    
     return cardElement;
 }
 
 initialCards.forEach((data) => {
     elements.append(createElement(data));
 });
+
 
 // обработка попапа 'добавить место'
 let buttonOpenAddPlacePopup = document.querySelector(".add-but");
@@ -105,6 +124,9 @@ let formSubmitAddPlace = (evt) => {
 buttonOpenAddPlacePopup.addEventListener("click", () => popupToggle(addPlacePopup));
 buttonCloseAddPlacePopup.addEventListener("click", () => popupToggle(addPlacePopup));
 formPlaceElement.addEventListener('submit', formSubmitAddPlace);
+const buttonCloseImagePopup = document.querySelector("#image-popup-close-button");
+buttonCloseImagePopup.addEventListener("click", () => popupToggle(showImagePopup));
+
 
 // удаление элемента
 

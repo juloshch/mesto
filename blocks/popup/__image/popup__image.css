@@ -1,0 +1,7 @@
+.popup__image {
+    max-height: 540px;
+}
+
+.popup__image:hover {
+    cursor: pointer;
+}
