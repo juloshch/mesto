@@ -66,7 +66,9 @@ const largeImageTitle = document.querySelector(".popup__image-title");
 function createElement(data) {
     const cardTemplate = document.querySelector("#card-template");
     const cardElement = cardTemplate.content.cloneNode(true);
-    cardElement.querySelector(".element__pic").src = data.link;
+    const elementPic = cardElement.querySelector(".element__pic");
+    elementPic.src = data.link;
+    elementPic.alt = data.name;
     cardElement.querySelector(".element__title").textContent = data.name;
     const currentDeleteButton = cardElement.querySelector(".element__bin-button");
     currentDeleteButton.addEventListener('click', function () {
@@ -79,8 +81,7 @@ function createElement(data) {
         evt.target.classList.toggle('element__heart_liked');
     });
    
-    const viewImage = cardElement.querySelector(".element__pic");
-    viewImage.addEventListener('click', () => {
+    elementPic.addEventListener('click', () => {
         largeImage.src = data.link;
         largeImageTitle.textContent = data.name;
         popupToggle(showImagePopup);
