@@ -28,67 +28,13 @@
         </button>
     </section>
     <section class="elements">
-        <article class="element">
-            <img src="./images/karachaevsk.jpg" class="element__pic" alt="Карачаевск">
-            <div class="element__caption">
-                <h2 class="element__title">Карачаевск</h2>
-                <button class="element__heart" type="button">
-                    <img src="./images/heart.svg" alt="сердечко">
-                </button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/elbrus.jpg" class="element__pic" alt="Гора Эльбрус">
-            <div class="element__caption">
-                <h2 class="element__title">Гора Эльбрус</h2>
-                <button class="element__heart" type="button">
-                    <img src="./images/heart.svg" alt="сердечко">
-                </button>
-            </div>
-            
-        </article>
-        <article class="element">
-            <img src="./images/dombaj.jpg" class="element__pic" alt="Домбай">
-            <div class="element__caption">
-                <h2 class="element__title">Домбай</h2>
-                <button class="element__heart" type="button">
-                    <img src="./images/heart.svg" alt="сердечко">
-                </button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/elbrus.jpg" class="element__pic" alt="Гора Эльбрус">
-            <div class="element__caption">
-                <h2 class="element__title">Гора Эльбрус</h2>
-                <button class="element__heart" type="button">
-                    <img src="./images/heart.svg" alt="сердечко">
-                </button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/dombaj.jpg" class="element__pic" alt="Домбай">
-            <div class="element__caption">
-                <h2 class="element__title">Домбай</h2>
-                <button class="element__heart" type="button">
-                    <img src="./images/heart.svg" alt="сердечко">
-                </button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/karachaevsk.jpg" class="element__pic" alt="Карачаево-Черкессия">
-            <div class="element__caption">
-                <h2 class="element__title">Карачаево-Черкессия</h2>
-                <button class="element__heart" type="button">
-                    <img src="./images/heart.svg" alt="сердечко">
-                </button>
-            </div>
-        </article>
+        
     </section>
     <footer class="footer">
         <p class="footer__paragraph">&copy; 2020 Mesto Russia</p>
     </footer>
-    <section class="popup">
-        <form class="popup__container">
+    <section class="popup" id="edit-profile-popup">
+        <form class="popup__container" id="edit-profile-container">
             <button class="popup__close-image" type="button">
                 <img src="./images/icon-close.svg" alt="закрыть">
             </button>
@@ -100,6 +46,43 @@
             </button>
         </form>
     </section>
+    <section class="popup" id="add-place-popup">
+        <form class="popup__container" id="add-place-container">
+            <button class="popup__close-image" id="add-place-popup-close-image" type="button">
+                <img src="./images/icon-close.svg" alt="закрыть">
+            </button>
+            <h2 class="popup__title">Новое место</h2>
+            <input type="text" placeholder="Название" class="popup__field popup__field_type_place-name">
+            <input type="text" placeholder="Ссылка на картинку" class="popup__field popup__field_type_place-link">
+            <button class="popup__save-button" type="submit">
+                Создать
+            </button>
+        </form>
+    </section>
+
+    <section class="popup popup__image-popup">
+        <div class="popup__image-container">
+            <button class="popup__close-image" id="image-popup-close-button" type="button">
+                <img src="./images/icon-close.svg" class="popup__close-button-icon" alt="закрыть">
+            </button>
+            <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg" class="popup__image" alt="kamchatka">
+            <h2 class="popup__image-title">Камчатка</h2>
+        </div>
+    </section>
+
+    <template id="card-template">
+        <article class="element">
+            <img src="data.link" class="element__pic" alt="data.name">
+            <button class="element__bin-button" type="button">
+                <img src="./images/bin-pic.svg" alt="удалить">
+            </button>
+            <div class="element__caption">
+                <h2 class="element__title"> data.name </h2>
+                <button class="element__heart" type="button">
+                </button>
+            </div>
+        </article>
+    </template>
     <script src="./scripts/script.js"></script>
 </body>
 </html>
