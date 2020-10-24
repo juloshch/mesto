@@ -59,6 +59,17 @@
             </button>
         </form>
     </section>
+
+    <section class="popup popup__image-popup">
+        <div class="popup__image-container">
+            <button class="popup__close-image" id="image-popup-close-button" type="button">
+                <img src="./images/icon-close.svg" class="popup__close-button-icon" alt="закрыть">
+            </button>
+            <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg" class="popup__image" alt="kamchatka">
+            <h2 class="popup__image-title">Камчатка</h2>
+        </div>
+    </section>
+
     <template id="card-template">
         <article class="element">
             <img src="data.link" class="element__pic" alt="data.name">
@@ -73,6 +84,5 @@
         </article>
     </template>
     <script src="./scripts/script.js"></script>
-    <script src="./scripts/cards.js"></script>
 </body>
 </html>
