@@ -1,0 +1,20 @@
+.element__bin-button {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    width: 17px;
+    height: 24px;
+    margin-top: 19px;
+    margin-left: -40px;
+}
+
+.element__bin-button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 320px) {
+    .element__bin-button {
+        display: none;
+    }
+}
