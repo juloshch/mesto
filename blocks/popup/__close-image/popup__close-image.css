@@ -15,7 +15,14 @@
 
 @media screen and (max-width: 530px) {
     .popup__close-image {
-        top: -58px;
-        right: -11px;    
+        top: -42px;
+        right: -17px;    
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .popup__close-image {
+        top: -36px;
+        right: -43px;    
     }
 }

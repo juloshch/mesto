@@ -1,7 +1,32 @@
 .popup__image {
     max-height: 540px;
+    max-width: 816px;
 }
 
 .popup__image:hover {
     cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+    .popup__image {
+        max-width: 700px;   
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .popup__image {
+        max-width: 480px;   
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .popup__image {
+        max-width: 280px;   
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .popup__image {
+        max-width: 240px;
+    }
 }

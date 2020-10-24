@@ -16,3 +16,9 @@
     transition-duration: 1s;
     transition-timing-function: ease;
 }
+
+/* @media screen and (max-width: 320px) {
+    .popup {
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+} */
