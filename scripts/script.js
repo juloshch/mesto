@@ -34,25 +34,33 @@ const popupFieldName = document.querySelector(".popup__field_type_name");
 const popupFieldParagraph = document.querySelector(".popup__field_type_paragraph");
 const formElement = document.querySelector("#edit-profile-container");
 
-const popupToggle = (popup) => {
-    popup.classList.toggle("popup_is-opened");
-};
+// const togglePopup = (popup) => {
+//     popup.classList.toggle("popup_is-opened");
+// };
+
+const toggleOpenPopup = (popup) => {
+    popup.classList.add("popup_is-opened");
+}
+
+const toggleClosePopup = (popup) => {
+    popup.classList.remove("popup_is-opened");
+}
 
 const openPopup = () => {
     popupFieldName.value = captionName.innerText;
     popupFieldParagraph.value = captionParagraph.innerText;
-    popupToggle(editProfilePopup);
+    toggleOpenPopup(editProfilePopup);
 };
 
 const formSubmitHandler = (evt) => {
     evt.preventDefault();
     captionName.textContent = popupFieldName.value;
     captionParagraph.textContent = popupFieldParagraph.value;
-    popupToggle(editProfilePopup);
+    toggleClosePopup(editProfilePopup);
 };
 
 buttonOpenPopup.addEventListener("click", openPopup);
-buttonClosePopup.addEventListener("click", () => popupToggle(editProfilePopup));
+buttonClosePopup.addEventListener("click", () => toggleClosePopup(editProfilePopup));
 formElement.addEventListener('submit', formSubmitHandler); 
 
 
@@ -63,6 +71,22 @@ const showImagePopup = document.querySelector('.popup__image-popup');
 const largeImage = document.querySelector(".popup__image");
 const largeImageTitle = document.querySelector(".popup__image-title");
 
+const handleDeleteCard = (evt) => {
+    const elementItem = evt.target.closest(".element");
+    elementItem.remove();
+};
+
+const handleLikeIcon = (evt) => {
+    evt.target.classList.toggle('element__heart_liked');
+};
+
+const handleOpenCard = (data) => {
+    largeImage.src = data.link;
+    largeImage.alt = data.name;
+    largeImageTitle.textContent = data.name;
+    toggleOpenPopup(showImagePopup);
+}
+
 function createElement(data) {
     const cardTemplate = document.querySelector("#card-template");
     const cardElement = cardTemplate.content.cloneNode(true);
@@ -71,21 +95,12 @@ function createElement(data) {
     elementPic.alt = data.name;
     cardElement.querySelector(".element__title").textContent = data.name;
     const currentDeleteButton = cardElement.querySelector(".element__bin-button");
-    currentDeleteButton.addEventListener('click', function () {
-        const elementItem = currentDeleteButton.closest(".element");
-        elementItem.remove();
-    });
+    currentDeleteButton.addEventListener('click', handleDeleteCard);
 
     const likeButton = cardElement.querySelector(".element__heart");
-    likeButton.addEventListener('click', function(evt) {
-        evt.target.classList.toggle('element__heart_liked');
-    });
+    likeButton.addEventListener('click', handleLikeIcon);
    
-    elementPic.addEventListener('click', () => {
-        largeImage.src = data.link;
-        largeImageTitle.textContent = data.name;
-        popupToggle(showImagePopup);
-    });
+    elementPic.addEventListener('click', () => handleOpenCard(data));
     
     return cardElement;
 }
@@ -112,13 +127,13 @@ const formSubmitAddPlace = (evt) => {
     const newElement = createElement(newElementData);
 
     elements.prepend(newElement);
-    popupToggle(addPlacePopup);
+    toggleClosePopup(addPlacePopup);
     placeName.value = '';
     placeLink.value = '';
 };
 
-buttonOpenAddPlacePopup.addEventListener("click", () => popupToggle(addPlacePopup));
-buttonCloseAddPlacePopup.addEventListener("click", () => popupToggle(addPlacePopup));
+buttonOpenAddPlacePopup.addEventListener("click", () => toggleOpenPopup(addPlacePopup));
+buttonCloseAddPlacePopup.addEventListener("click", () => toggleClosePopup(addPlacePopup));
 formPlaceElement.addEventListener('submit', formSubmitAddPlace);
 const buttonCloseImagePopup = document.querySelector("#image-popup-close-button");
-buttonCloseImagePopup.addEventListener("click", () => popupToggle(showImagePopup));
+buttonCloseImagePopup.addEventListener("click", () => toggleClosePopup(showImagePopup));
