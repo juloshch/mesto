@@ -44,6 +44,7 @@ const placeName = document.querySelector(".popup__field_type_place-name");
 const placeLink = document.querySelector(".popup__field_type_place-link");
 const formPlaceElement = document.querySelector("#add-place-container");
 const buttonCloseImagePopup = document.querySelector("#image-popup-close-button");
+const popups = document.querySelectorAll(".popup");
 
 const toggleOpenPopup = (popup) => {
     popup.classList.add("popup_is-opened");
@@ -58,6 +59,18 @@ const openPopup = () => {
     popupFieldParagraph.value = captionParagraph.innerText;
     toggleOpenPopup(editProfilePopup);
 };
+
+const closeOnBackground = (event) => {
+    if (event.target !== event.currentTarget) {
+        return;
+    }
+    toggleClosePopup(event.target);
+};
+
+Array.from(popups).forEach((popup) => {
+    popup.addEventListener('click', closeOnBackground);
+});
+
 
 const formSubmitHandler = (evt) => {
     evt.preventDefault();
