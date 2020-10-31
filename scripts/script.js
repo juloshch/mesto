@@ -44,13 +44,23 @@ const placeName = document.querySelector(".popup__field_type_place-name");
 const placeLink = document.querySelector(".popup__field_type_place-link");
 const formPlaceElement = document.querySelector("#add-place-container");
 const buttonCloseImagePopup = document.querySelector("#image-popup-close-button");
+const popups = document.querySelectorAll(".popup");
 
 const toggleOpenPopup = (popup) => {
     popup.classList.add("popup_is-opened");
+    document.addEventListener('keydown', closeOnEscape);
 }
 
 const toggleClosePopup = (popup) => {
     popup.classList.remove("popup_is-opened");
+    document.removeEventListener('keydown', closeOnEscape);
+}
+
+function closeOnEscape(event) {
+    if (event.keyCode === 27) {
+       const openedPopup = document.querySelector('.popup_is-opened');
+       toggleClosePopup(openedPopup);
+    }
 }
 
 const openPopup = () => {
@@ -58,6 +68,18 @@ const openPopup = () => {
     popupFieldParagraph.value = captionParagraph.innerText;
     toggleOpenPopup(editProfilePopup);
 };
+
+const closeOnBackground = (event) => {
+    if (event.target !== event.currentTarget) {
+        return;
+    }
+    toggleClosePopup(event.target);
+};
+
+Array.from(popups).forEach((popup) => {
+    popup.addEventListener('click', closeOnBackground);
+});
+
 
 const formSubmitHandler = (evt) => {
     evt.preventDefault();
