@@ -48,10 +48,19 @@ const popups = document.querySelectorAll(".popup");
 
 const toggleOpenPopup = (popup) => {
     popup.classList.add("popup_is-opened");
+    document.addEventListener('keydown', closeOnEscape);
 }
 
 const toggleClosePopup = (popup) => {
     popup.classList.remove("popup_is-opened");
+    document.removeEventListener('keydown', closeOnEscape);
+}
+
+function closeOnEscape(event) {
+    if (event.keyCode === 27) {
+       const openedPopup = document.querySelector('.popup_is-opened');
+       toggleClosePopup(openedPopup);
+    }
 }
 
 const openPopup = () => {
