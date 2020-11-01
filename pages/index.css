@@ -18,6 +18,7 @@
 
 @import url('../blocks/elements/elements.css');
 @import url('../blocks/element/element.css');
+@import url('../blocks/element/__pic-container/element__pic-container.css');
 @import url('../blocks/element/__bin-button/element__bin-button.css');
 @import url('../blocks/element/__pic/element__pic.css');
 @import url('../blocks/element/__caption/element__caption.css');
