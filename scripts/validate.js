@@ -1,5 +1,4 @@
 const showInputError = (formElement, inputElement, errorMessage, parameters) => {
-    console.log(`#${inputElement.id}-error`);
     const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.add(parameters.inputErrorClass);
     errorElement.classList.add(parameters.errorMessageClass);
