@@ -21,9 +21,6 @@ const popups = document.querySelectorAll(".popup");
 const cardTemplate = document.querySelector("#card-template");
 
 const openPopup = (popup) => {
-    const submitButton = popup.querySelector('.popup__save-button');
-    submitButton.disabled = true;
-    submitButton.classList.add('popup__save-button_disabled');
     popup.classList.add("popup_is-opened");
     document.addEventListener('keydown', closeOnEscape);
 }
@@ -121,11 +118,9 @@ const formSubmitAddPlace = (evt) => {
 const openAddPlacePopup = () => {
     placeName.value = '';
     placeLink.value = '';
-    // const savePlaceButton = addPlacePopup.querySelector('.popup__save-button');
-    // savePlaceButton.disabled = true;
-    // savePlaceButton.classList.add('popup__save-button_disabled'); 
-    // вынесла этот функционал в openPopup, иначе после редактирования и сохранения профиля
-    // при повторном редактировании кнопка сохранить была доступна сразу
+    const savePlaceButton = addPlacePopup.querySelector('.popup__save-button');
+    savePlaceButton.disabled = true;
+    savePlaceButton.classList.add('popup__save-button_disabled'); 
     openPopup(addPlacePopup);
 }
 
