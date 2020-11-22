@@ -1,11 +1,12 @@
 import {openPopup, closePopup, largeImage, largeImageTitle, showImagePopup} from './script.js';
 
+// класс карточки
 export class Card {
-    
     constructor(data, cardTemplate) {
         this._data = data;
         this._cardTemplate = cardTemplate;
     }
+
     _handleDeleteCard = (evt) => {
         const elementItem = evt.target.closest(".element");
         elementItem.remove();
