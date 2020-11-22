@@ -1,5 +1,5 @@
 import {initialCards} from './data.js';
-import {Card} from './Card.js';
+import {Card} from './сard.js';
 
 const buttonOpenPopup = document.querySelector(".edit-but");
 const buttonClosePopup = document.querySelector(".popup__close-image");
