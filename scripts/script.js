@@ -1,6 +1,16 @@
 import {initialCards} from './data.js';
 import {Card} from './сard.js';
+import {FormValidator} from './FormValidator.js';
+import {openPopup, closePopup, showImagePopup} from './utils.js';
 
+const validationConfig = {
+    formSelector: '.popup__container',
+    inputSelector: '.popup__field',
+    submitButtonSelector: '.popup__save-button',
+    inactiveButtonClass: 'popup__save-button_disabled',
+    inputErrorClass: 'popup__field_type_error',
+    errorMessageClass: 'popup__input-error_active'
+};
 const buttonOpenPopup = document.querySelector(".edit-but");
 const buttonClosePopup = document.querySelector(".popup__close-image");
 const editProfilePopup = document.querySelector("#edit-profile-popup");
@@ -10,9 +20,6 @@ const popupFieldName = document.querySelector(".popup__field_type_name");
 const popupFieldParagraph = document.querySelector(".popup__field_type_paragraph");
 const formProfileElement = document.querySelector("#edit-profile-container");
 const elements = document.querySelector(".elements");
-export const showImagePopup = document.querySelector('.popup__image-popup');
-export const largeImage = document.querySelector(".popup__image");
-export const largeImageTitle = document.querySelector(".popup__image-title");
 const buttonOpenAddPlacePopup = document.querySelector(".add-but");
 const addPlacePopup = document.querySelector("#add-place-popup");
 const buttonCloseAddPlacePopup = document.querySelector("#add-place-popup-close-image");
@@ -22,23 +29,6 @@ const formPlaceElement = document.querySelector("#add-place-container");
 const buttonCloseImagePopup = document.querySelector("#image-popup-close-button");
 const popups = document.querySelectorAll(".popup");
 const cardTemplate = document.querySelector('#card-template');
-
-export const openPopup = (popup) => {
-    popup.classList.add("popup_is-opened");
-    document.addEventListener('keydown', closeOnEscape);
-}
-
-export const closePopup = (popup) => {
-    popup.classList.remove("popup_is-opened");
-    document.removeEventListener('keydown', closeOnEscape);
-}
-
-function closeOnEscape(event) {
-    if (event.keyCode === 27) {
-       const openedPopup = document.querySelector('.popup_is-opened');
-       closePopup(openedPopup);
-    }
-}
 
 const openProfilePopup = () => {
     popupFieldName.value = captionName.innerText;
@@ -93,7 +83,7 @@ const openAddPlacePopup = () => {
     placeLink.value = '';
     const savePlaceButton = addPlacePopup.querySelector('.popup__save-button');
     savePlaceButton.disabled = true;
-    savePlaceButton.classList.add('popup__save-button_disabled'); 
+    savePlaceButton.classList.add(validationConfig.inactiveButtonClass); 
     openPopup(addPlacePopup);
 }
 
@@ -101,3 +91,17 @@ buttonOpenAddPlacePopup.addEventListener("click", openAddPlacePopup);
 buttonCloseAddPlacePopup.addEventListener("click", () => closePopup(addPlacePopup));
 formPlaceElement.addEventListener('submit', formSubmitAddPlace);
 buttonCloseImagePopup.addEventListener("click", () => closePopup(showImagePopup));
+
+const enableValidation = (parameters) => {
+    const formList = Array.from(document.querySelectorAll(parameters.formSelector));
+
+    formList.forEach((formElement) => {
+        formElement.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+        });
+
+        new FormValidator(parameters, formElement).enableValidation();
+    });
+}
+
+enableValidation(validationConfig);
