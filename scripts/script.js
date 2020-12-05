@@ -2,6 +2,7 @@ import {initialCards} from './data.js';
 import {Card} from './сard.js';
 import {FormValidator} from './FormValidator.js';
 import {openPopup, closePopup, showImagePopup} from './utils.js';
+import {Section} from './section.js';
 
 const validationConfig = {
     formSelector: '.popup__container',
@@ -61,9 +62,15 @@ formProfileElement.addEventListener('submit', formProfileSubmit);
 
 //карточки из массива
 
-initialCards.forEach((data) => {
-    elements.append(new Card(data, cardTemplate).createElement());
-});
+new Section({
+        items: initialCards,
+        renderer: (item) => {
+            const card = new Card(item, cardTemplate).createElement();
+            return card;
+        }
+    },
+     '.elements').renderItems();
+
 
 // обработка попапа 'добавить место'
 
