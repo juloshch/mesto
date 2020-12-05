@@ -1,4 +1,4 @@
-import {openPopup, largeImage, largeImageTitle, showImagePopup} from './utils.js';
+import {PopupWithImage} from '../components/popupWithImage.js';
 
 // класс карточки
 export class Card {
@@ -17,10 +17,9 @@ export class Card {
     };
     
     _handleOpenCard = () => {
-        largeImage.src = this._data.link;
-        largeImage.alt = this._data.name;
-        largeImageTitle.textContent = this._data.name;
-        openPopup(showImagePopup);
+        const popupWithImage = new PopupWithImage('.popup__image-popup', '.popup__close-image', '.popup__image', '.popup__image-title', this._data);
+        popupWithImage.open();
+        popupWithImage.setEventListeners();
     }
 
     createElement() {

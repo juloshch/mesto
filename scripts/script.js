@@ -1,7 +1,7 @@
 import {initialCards} from './data.js';
 import {Card} from './сard.js';
 import {FormValidator} from './FormValidator.js';
-import {openPopup, closePopup, showImagePopup} from './utils.js';
+import {openPopup, closePopup} from './utils.js';
 import {Section} from './section.js';
 
 const validationConfig = {
@@ -20,7 +20,7 @@ const captionParagraph = document.querySelector(".captions__paragraph");
 const popupFieldName = document.querySelector(".popup__field_type_name");
 const popupFieldParagraph = document.querySelector(".popup__field_type_paragraph");
 const formProfileElement = document.querySelector("#edit-profile-container");
-const elements = document.querySelector(".elements");
+// const elements = document.querySelector(".elements");
 const buttonOpenAddPlacePopup = document.querySelector(".add-but");
 const addPlacePopup = document.querySelector("#add-place-popup");
 const buttonCloseAddPlacePopup = document.querySelector("#add-place-popup-close-image");
@@ -62,14 +62,15 @@ formProfileElement.addEventListener('submit', formProfileSubmit);
 
 //карточки из массива
 
-new Section({
+const cardsSection = new Section({
         items: initialCards,
         renderer: (item) => {
             const card = new Card(item, cardTemplate).createElement();
             return card;
         }
-    },
-     '.elements').renderItems();
+    }, '.elements');
+     
+cardsSection.renderItems();
 
 
 // обработка попапа 'добавить место'
@@ -81,7 +82,8 @@ const formSubmitAddPlace = (evt) => {
         link: placeLink.value
     };
     const newElement = new Card(newElementData, cardTemplate).createElement();
-    elements.prepend(newElement);
+    cardsSection.addItem(newElement);
+    // elements.prepend(newElement);
     closePopup(addPlacePopup);
 };
 
@@ -97,7 +99,7 @@ const openAddPlacePopup = () => {
 buttonOpenAddPlacePopup.addEventListener("click", openAddPlacePopup);
 buttonCloseAddPlacePopup.addEventListener("click", () => closePopup(addPlacePopup));
 formPlaceElement.addEventListener('submit', formSubmitAddPlace);
-buttonCloseImagePopup.addEventListener("click", () => closePopup(showImagePopup));
+// buttonCloseImagePopup.addEventListener("click", () => closePopup(showImagePopup));
 
 const enableValidation = (parameters) => {
     const formList = Array.from(document.querySelectorAll(parameters.formSelector));

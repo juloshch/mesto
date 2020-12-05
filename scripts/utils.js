@@ -1,7 +1,6 @@
 const ESC_KEYCODE = 27;
-export const showImagePopup = document.querySelector('.popup__image-popup');
-export const largeImage = document.querySelector(".popup__image");
-export const largeImageTitle = document.querySelector(".popup__image-title");
+// export const showImagePopup = document.querySelector('.popup__image-popup');
+
 
 export const openPopup = (popup) => {
     popup.classList.add("popup_is-opened");
