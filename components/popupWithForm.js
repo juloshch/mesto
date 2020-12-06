@@ -2,9 +2,11 @@ import {Popup} from './popup.js';
 import {validationConfig} from '../scripts/data.js';
 
 export class PopupWithForm extends Popup {
-    constructor(popupSelector, closeButtonSelector, handleFormSubmit) {
+    constructor(popupSelector, closeButtonSelector, submitButtonSelector, handleFormSubmit, clearOnClose) {
         super(popupSelector, closeButtonSelector);
         this._handleFormSubmit = handleFormSubmit;
+        this._submitButtonSelector = submitButtonSelector;
+        this._clearOnClose = clearOnClose;
     }
 
     _getTemplate() {
@@ -27,10 +29,18 @@ export class PopupWithForm extends Popup {
         return this._formValues;
     }
 
+    fillInputValues(data) {
+        for (let key in data) {
+            const inputSelector = 'input[name="' + key + '"]';
+            const input = this._element.querySelector(inputSelector);
+            if (input) {
+                input.value = data[key];
+            }
+        }
+    }
+
     setEventListeners() {
-        console.log(this._element)
         this._element.addEventListener('submit', (evt) => {
-            console.log('submit')
             evt.preventDefault();
             this._handleFormSubmit(this._getInputValues());
             this.close();
@@ -39,16 +49,18 @@ export class PopupWithForm extends Popup {
     }
 
     open() {
-        const savePlaceButton = this._popup.querySelector('.popup__save-button');
-        savePlaceButton.disabled = true;
-        savePlaceButton.classList.add(validationConfig.inactiveButtonClass);
+        const submitButton = this._popup.querySelector(this._submitButtonSelector);
+        submitButton.disabled = true;
+        submitButton.classList.add(validationConfig.inactiveButtonClass);
         super.open();
     }
 
     close() {
-        this._inputList.forEach(input => {
-            input.value = '';
-        });
+        if (this._clearOnClose && this._inputList) {
+            this._inputList.forEach(input => {
+                input.value = '';
+            });
+        }
         super.close();
     }
 }
