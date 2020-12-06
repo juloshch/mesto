@@ -18,3 +18,4 @@ function closeOnEscape(event) {
        closePopup(openedPopup);
     }
 }
+

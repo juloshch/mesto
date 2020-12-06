@@ -54,9 +54,9 @@
                 <img src="./images/icon-close.svg" alt="закрыть">
             </button>
             <h2 class="popup__title">Новое место</h2>
-            <input id="title-input" name="title-input" type="text" placeholder="Название" class="popup__field popup__field_type_place-name" minlength="2" maxlength="30" required>
+            <input id="title-input" name="name" type="text" placeholder="Название" class="popup__field popup__field_type_place-name" minlength="2" maxlength="30" required>
             <span id="title-input-error" class="popup__input-error">Вы пропустили это поле</span>
-            <input id="url-input" name="url-input" type="url" placeholder="Ссылка на картинку" class="popup__field popup__field_type_place-link" required>
+            <input id="url-input" name="link" type="url" placeholder="Ссылка на картинку" class="popup__field popup__field_type_place-link" required>
             <span id="url-input-error" class="popup__input-error"></span>
             <button class="popup__save-button" type="submit">
                 Создать
@@ -94,6 +94,7 @@
     <script src="./scripts/section.js" type="module"></script>
     <script src="./components/popup.js" type="module"></script>
     <script src="./components/popupWithImage.js" type="module"></script>
+    <script src="./components/popupWithForm.js" type="module"></script>
     <script src="./scripts/FormValidator.js" type="module"></script>
     <script src="./scripts/сard.js" type="module"></script>
     <script src="./scripts/utils.js" type="module"></script>
