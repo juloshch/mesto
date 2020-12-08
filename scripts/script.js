@@ -3,8 +3,9 @@ import {Card} from './сard.js';
 import {FormValidator} from './FormValidator.js';
 import {closePopup} from './utils.js';
 import {Section} from './section.js';
-import { PopupWithForm } from '../components/popupWithForm.js';
+import {PopupWithForm} from '../components/popupWithForm.js';
 import {UserInfo} from '../components/userInfo.js';
+import {PopupWithImage} from '../components/popupWithImage.js';
 
 const buttonOpenPopup = document.querySelector(".edit-but");
 const buttonOpenAddPlacePopup = document.querySelector(".add-but");
@@ -45,10 +46,16 @@ buttonOpenPopup.addEventListener("click", openProfilePopup);
 
 //карточки из массива
 
+const handleOpenCard = (data) => {
+    const popupWithImage = new PopupWithImage('.popup__image-popup', '.popup__close-image', '.popup__image', '.popup__image-title', data);
+    popupWithImage.open();
+    popupWithImage.setEventListeners();
+}
+
 const cardsSection = new Section({
         items: initialCards,
         renderer: (item) => {
-            const card = new Card(item, cardTemplate).createElement();
+            const card = new Card(item, cardTemplate, handleOpenCard).createElement();
             return card;
         }
     }, '.elements');
@@ -59,8 +66,7 @@ cardsSection.renderItems();
 // обработка попапа 'добавить место'
 
 const formSubmitAddPlace = (item) => {
-    console.log(item);
-    const newElement = new Card(item, cardTemplate).createElement();
+    const newElement = new Card(item, cardTemplate, handleOpenCard).createElement();
     cardsSection.addItem(newElement);
 };
 
