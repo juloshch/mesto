@@ -1,8 +1,8 @@
 import {initialCards, validationConfig} from './data.js';
-import {Card} from './сard.js';
+import {Card} from '../components/сard.js';
 import {FormValidator} from './FormValidator.js';
 import {closePopup} from './utils.js';
-import {Section} from './section.js';
+import {Section} from '../components/section.js';
 import {PopupWithForm} from '../components/popupWithForm.js';
 import {UserInfo} from '../components/userInfo.js';
 import {PopupWithImage} from '../components/popupWithImage.js';

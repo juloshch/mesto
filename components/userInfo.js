@@ -1,5 +1,3 @@
-import {Popup} from './popup.js';
-
 export class UserInfo {
     constructor({nameSelector, infoSelector}) {
         this._captionName = document.querySelector(nameSelector);
