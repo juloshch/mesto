@@ -1,10 +1,8 @@
-import {openPopup, largeImage, largeImageTitle, showImagePopup} from './utils.js';
-
-// класс карточки
 export class Card {
-    constructor(data, cardTemplate) {
+    constructor(data, cardTemplate, handleCardClick) {
         this._data = data;
         this._cardTemplate = cardTemplate;
+        this._handleCardClick = handleCardClick;
     }
 
     _handleDeleteCard = () => {
@@ -15,13 +13,6 @@ export class Card {
     _handleLikeIcon = (evt) => {
         evt.target.classList.toggle('element__heart_liked');
     };
-    
-    _handleOpenCard = () => {
-        largeImage.src = this._data.link;
-        largeImage.alt = this._data.name;
-        largeImageTitle.textContent = this._data.name;
-        openPopup(showImagePopup);
-    }
 
     createElement() {
         const cardElement = this._cardTemplate.content.cloneNode(true);
@@ -33,10 +24,8 @@ export class Card {
         currentDeleteButton.addEventListener('click', () => this._handleDeleteCard());
         const likeButton = cardElement.querySelector(".element__heart");
         likeButton.addEventListener('click', this._handleLikeIcon);
-        elementPic.addEventListener('click', () => this._handleOpenCard());
+        elementPic.addEventListener('click', () => this._handleCardClick(this._data));
         this._cardElement = cardElement.querySelector(".element"); 
-        // почему-то когда я сохраняла в this._cardElement прямо document fragment и делала 
-        // this._cardElement.querySelector(".element") в _handleDeleteCard я получала null
         return this._cardElement;
     }
 }
