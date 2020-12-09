@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
 </head>
 <body class="page">
     <section class="header">
-        <img class="logo" src="./images/Vectorlogo.svg" alt="Место">
+        <img class="logo" src="<%=require('./images/Vectorlogo.svg')%>" alt="Место">
     </section>
     <section class="profile">
         <div class="profile-info">
-            <img src="./images/imagekusto.jpg" class="profile-info__kusto" alt="Кусто">
+            <img src="<%=require('./images/imagekusto.jpg')%>" class="profile-info__kusto" alt="Кусто">
             <div class="captions">
                 <div class="caption">
                     <h1 class="caption__name">Жак-Ив Кусто</h1>
                     <button class="edit-but" type="button">
-                        <img src="./images/Vectorvector.svg" alt="ввод">
+                        <img src="<%=require('./images/Vectorvector.svg')%>" alt="ввод">
                     </button>
                 </div>
                 <p class="captions__paragraph">Исследователь океана</p>
             </div>
         </div>
         <button class="add-but" type="button">
-            <img src="./images/add.svg" class="add-but__image" alt="добавить">
+            <img src="<%=require('./images/add.svg')%>" class="add-but__image" alt="добавить">
         </button>
     </section>
     <section class="elements">
@@ -36,7 +35,7 @@
     <section class="popup" id="edit-profile-popup">
         <form class="popup__container" id="edit-profile-container" name="popup__container" novalidate>
             <button class="popup__close-image" type="button">
-                <img src="./images/icon-close.svg" alt="закрыть">
+                <img src="<%=require('./images/icon-close.svg')%>" alt="закрыть">
             </button>
             <h2 class="popup__title">Редактировать профиль</h2>
             <input id="name-input" name="name" type="text" placeholder="Имя" class="popup__field popup__field_type_name" minlength="2" maxlength="40" required>
@@ -51,7 +50,7 @@
     <section class="popup" id="add-place-popup">
         <form class="popup__container" name="popup__container" id="add-place-container" novalidate>
             <button class="popup__close-image" id="add-place-popup-close-image" type="button">
-                <img src="./images/icon-close.svg" alt="закрыть">
+                <img src="<%=require('./images/icon-close.svg')%>" alt="закрыть">
             </button>
             <h2 class="popup__title">Новое место</h2>
             <input id="title-input" name="name" type="text" placeholder="Название" class="popup__field popup__field_type_place-name" minlength="2" maxlength="30" required>
@@ -67,7 +66,7 @@
     <section class="popup popup__image-popup">
         <div class="popup__image-container">
             <button class="popup__close-image" id="image-popup-close-button" type="button">
-                <img src="./images/icon-close.svg" class="popup__close-button-icon" alt="закрыть">
+                <img src="<%=require('./images/icon-close.svg')%>" class="popup__close-button-icon" alt="закрыть">
             </button>
             <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg" class="popup__image" alt="kamchatka">
             <h2 class="popup__image-title">Камчатка</h2>
@@ -79,7 +78,7 @@
             <div class="element__pic-container">
                 <img src="data.link" class="element__pic" alt="data.name">
                 <button class="element__bin-button" type="button">
-                    <img src="./images/bin-pic.svg" alt="удалить">
+                    <img src="<%=require('./images/bin-pic.svg')%>" alt="удалить">
                 </button>
             </div>
             <div class="element__caption">
@@ -89,15 +88,5 @@
             </div>
         </article>
     </template>
-    <script src="./scripts/data.js" type="module"></script>
-    <script src="./scripts/index.js" type="module"></script>
-    <script src="./components/section.js" type="module"></script>
-    <script src="./components/popup.js" type="module"></script>
-    <script src="./components/popupWithImage.js" type="module"></script>
-    <script src="./components/popupWithForm.js" type="module"></script>
-    <script src="./components/userInfo.js" type="module"></script>
-    <script src="./scripts/FormValidator.js" type="module"></script>
-    <script src="./components/сard.js" type="module"></script>
-    <script src="./scripts/utils.js" type="module"></script>
 </body>
 </html>
