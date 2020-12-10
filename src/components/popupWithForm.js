@@ -15,12 +15,12 @@ export class PopupWithForm extends Popup {
     } 
 
     generateForm() {
-        this._element = this._getTemplate();      
+        this._element = this._getTemplate();    
+        this._inputList = this._element.querySelectorAll('.popup__field');
         return this._element;
     } 
 
     _getInputValues() {
-        this._inputList = this._element.querySelectorAll('.popup__field');
         this._formValues = {};
         this._inputList.forEach(input => {
             this._formValues[input.name] = input.value;
@@ -48,19 +48,18 @@ export class PopupWithForm extends Popup {
         super.setEventListeners();
     }
 
-    open() {
-        const submitButton = this._popup.querySelector(this._submitButtonSelector);
-        submitButton.disabled = true;
-        submitButton.classList.add(validationConfig.inactiveButtonClass);
-        super.open();
-    }
-
-    close() {
-        if (this._clearOnClose && this._inputList) {
+    reset() {
+        if (this._inputList) {
             this._inputList.forEach(input => {
                 input.value = '';
             });
         }
-        super.close();
     }
+
+    // open() {
+        // const submitButton = this._popup.querySelector(this._submitButtonSelector);
+        // submitButton.disabled = true;
+        // submitButton.classList.add(validationConfig.inactiveButtonClass);
+        // super.open();
+    // }
 }

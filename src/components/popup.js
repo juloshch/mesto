@@ -22,8 +22,16 @@ export class Popup {
             this.close();
         }
     }
+    
+    closeOnBackground(event) {
+        if (event.target !== event.currentTarget) {
+            return;
+        }
+        this.close();
+    };
 
     setEventListeners() {
         this._buttonClosePopup.addEventListener("click", () => this.close());
+        this._popup.addEventListener('click', (evt) => this.closeOnBackground(evt));
     }
 }
