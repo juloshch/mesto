@@ -1,12 +1,10 @@
 import {Popup} from './popup.js';
-import {validationConfig} from '../scripts/data.js';
 
 export class PopupWithForm extends Popup {
-    constructor(popupSelector, closeButtonSelector, submitButtonSelector, handleFormSubmit, clearOnClose) {
+    constructor(popupSelector, closeButtonSelector, submitButtonSelector, handleFormSubmit) {
         super(popupSelector, closeButtonSelector);
         this._handleFormSubmit = handleFormSubmit;
         this._submitButtonSelector = submitButtonSelector;
-        this._clearOnClose = clearOnClose;
     }
 
     _getTemplate() {
