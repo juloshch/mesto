@@ -20,7 +20,7 @@ const formProfileSubmit = (data) => {
     userInfo.setUserInfo(data);
 };
 
-const addProfilePopup = new PopupWithForm('#edit-profile-popup', '.popup__close-image', '.popup__save-button', formProfileSubmit, false);
+const addProfilePopup = new PopupWithForm('#edit-profile-popup', '.popup__close-image', '.popup__save-button', formProfileSubmit);
 addProfilePopup.generateForm();
 addProfilePopup.setEventListeners();
 
@@ -60,7 +60,7 @@ const formSubmitAddPlace = (item) => {
     cardsSection.addItem(newElement);
 };
 
-const addPlacePopup = new PopupWithForm('#add-place-popup', '#add-place-popup-close-image', '.popup__save-button', formSubmitAddPlace, true);
+const addPlacePopup = new PopupWithForm('#add-place-popup', '#add-place-popup-close-image', '.popup__save-button', formSubmitAddPlace);
 addPlacePopup.generateForm();
 addPlacePopup.setEventListeners();
 
