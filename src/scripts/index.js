@@ -6,6 +6,24 @@ import { Section } from '../components/section.js';
 import { PopupWithForm } from '../components/popupWithForm.js';
 import { UserInfo } from '../components/userInfo.js';
 import { PopupWithImage } from '../components/popupWithImage.js';
+import { Api } from './api.js';
+
+const api = new Api({
+    url: "https://mesto.nomoreparties.co/v1/cohort-18/",
+    headers: {
+        authorization: '40d8cb7e-f502-4a58-bbf0-76039287601c',
+        'Content-Type': 'application/json'
+    }
+});
+
+const profile = document.querySelector('.profile');
+api.getUserInfo()
+    .then((data) => {
+        console.log(data);
+        profile.querySelector('.profile-info__kusto').src = data.avatar;
+        profile.querySelector('.caption__name').textContent = data.name;
+        profile.querySelector('.captions__paragraph').textContent = data.about;
+    });
 
 const buttonOpenPopup = document.querySelector(".edit-but");
 const buttonOpenAddPlacePopup = document.querySelector(".add-but");
@@ -17,7 +35,17 @@ const userInfo = new UserInfo({
 });
 
 const formProfileSubmit = (data) => {
-    userInfo.setUserInfo(data);
+    api.updateUserInfo(data)
+        .then((res) => {
+            if(res.ok) {
+                userInfo.setUserInfo(data);
+                return;
+            }
+            return Promise.reject(`Что-то пошло не так: ${res.status}`);
+        })
+        .catch((err) => {
+            console.log(err);
+        }); 
 };
 
 const addProfilePopup = new PopupWithForm('#edit-profile-popup', '.popup__close-image', '.popup__save-button', formProfileSubmit);
@@ -42,8 +70,10 @@ const popupWithImage = new PopupWithImage('.popup__image-popup',
     '.popup__image-title');
 popupWithImage.setEventListeners();
 
+
+
 const cardsSection = new Section({
-    items: initialCards,
+    items: [],
     renderer: (item) => {
         const card = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage)).createElement();
         return card;
@@ -51,6 +81,16 @@ const cardsSection = new Section({
 }, '.elements');
 
 cardsSection.renderItems();
+
+// fetch  карточек, 
+api.getAllCards()
+    .then(cardsArray => {
+        cardsArray.forEach((item) => {
+            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage)).createElement();
+            cardsSection.addItem(newElement);
+        })
+    })
+
 
 
 // обработка попапа 'добавить место'

@@ -7,13 +7,13 @@ export class UserInfo {
     getUserInfo() {
         const userInfoData = {
             name: this._captionName.textContent,
-            paragraph: this._captionParagraph.textContent
+            about: this._captionParagraph.textContent
         }
         return userInfoData;
     }
 
     setUserInfo(data) {
         this._captionName.textContent = data.name;
-        this._captionParagraph.textContent = data.paragraph;
+        this._captionParagraph.textContent = data.about;
     }
 }

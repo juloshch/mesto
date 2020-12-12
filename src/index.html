@@ -11,15 +11,15 @@
     </section>
     <section class="profile">
         <div class="profile-info">
-            <img src="<%=require('./images/imagekusto.jpg')%>" class="profile-info__kusto" alt="Кусто">
+            <img src="" class="profile-info__kusto" alt="Кусто">
             <div class="captions">
                 <div class="caption">
-                    <h1 class="caption__name">Жак-Ив Кусто</h1>
+                    <h1 class="caption__name"></h1>
                     <button class="edit-but" type="button">
                         <img src="<%=require('./images/Vectorvector.svg')%>" alt="ввод">
                     </button>
                 </div>
-                <p class="captions__paragraph">Исследователь океана</p>
+                <p class="captions__paragraph"></p>
             </div>
         </div>
         <button class="add-but" type="button">
@@ -40,7 +40,7 @@
             <h2 class="popup__title">Редактировать профиль</h2>
             <input id="name-input" name="name" type="text" placeholder="Имя" class="popup__field popup__field_type_name" minlength="2" maxlength="40" required>
             <span id="name-input-error" class="popup__input-error">Вы пропустили это поле</span>
-            <input id="about-yourself-input" name="paragraph" type="text" placeholder="О себе" class="popup__field popup__field_type_paragraph" minlength="2" maxlength="200" required>
+            <input id="about-yourself-input" name="about" type="text" placeholder="О себе" class="popup__field popup__field_type_paragraph" minlength="2" maxlength="200" required>
             <span id="about-yourself-input-error" class="popup__input-error">Вы пропустили это поле</span>
             <button class="popup__save-button" type="submit">
                 Сохранить
