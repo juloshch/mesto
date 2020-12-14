@@ -10,6 +10,7 @@ export class Api {
             headers: this._headers
         })
             .then(res => res.json())
+            // .then(res => console.log(res))
     }
 
     getAllCards() {
@@ -31,6 +32,16 @@ export class Api {
         });
     }
 
+    postNewAvatar(info) {
+        return fetch(this._url + 'users/me/avatar', {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                avatar: info.link
+            })
+        });
+    }
+
     postNewCard(info) {
         return fetch(this._url + 'cards', {
             method: 'POST',
@@ -43,11 +54,24 @@ export class Api {
     }
 
     deleteCard(id) {
-        // console.log('deleted id: ' + id);
         return fetch(this._url + 'cards/' + id, {
             method: 'DELETE',
             headers: this._headers,
         });
+    }
+
+    like(id) {
+        return fetch(this._url + 'cards/likes/' + id, {
+            method: 'PUT',
+            headers: this._headers,
+        })
+    }
+
+    removeLike(id) {
+        return fetch(this._url + 'cards/likes/' + id, {
+            method: 'DELETE',
+            headers: this._headers,
+        })
     }
 
     // changeAvatar() {

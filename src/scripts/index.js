@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { initialCards, validationConfig } from './data.js';
+import { validationConfig } from './data.js';
 import { Card } from '../components/сard.js';
 import { FormValidator } from './FormValidator.js';
 import { Section } from '../components/section.js';
@@ -8,7 +8,6 @@ import { UserInfo } from '../components/userInfo.js';
 import { PopupWithImage } from '../components/popupWithImage.js';
 import { Api } from './api.js';
 import { PopupWithSubmit } from '../components/popupWithSubmit.js';
-import { PopupWithAvatar } from '../components/popupWithAvatar.js';
 
 const api = new Api({
     url: "https://mesto.nomoreparties.co/v1/cohort-18/",
@@ -18,11 +17,8 @@ const api = new Api({
     }
 });
 
-
-
 let userID = undefined;
 const profile = document.querySelector('.profile');
-
 
 const buttonOpenPopup = document.querySelector(".edit-but");
 const buttonOpenAddPlacePopup = document.querySelector(".add-but");
@@ -30,10 +26,16 @@ const cardTemplate = document.querySelector('#card-template');
 
 const userInfo = new UserInfo({
     nameSelector: '.caption__name',
-    infoSelector: '.captions__paragraph'
+    infoSelector: '.captions__paragraph',
+    avatarSelector: '.profile-info__kusto'
 });
 
-const formProfileSubmit = (data) => {
+
+const addProfilePopup = new PopupWithForm('#edit-profile-popup', '.popup__close-image', '.popup__save-button', formProfileSubmit, 'Сохранить');
+addProfilePopup.generateForm();
+addProfilePopup.setEventListeners();
+
+function formProfileSubmit(data) {
     api.updateUserInfo(data)
         .then((res) => {
             if (res.ok) {
@@ -44,12 +46,11 @@ const formProfileSubmit = (data) => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        })
+        .finally(() =>{
+            addProfilePopup.close();
+        })
 };
-
-const addProfilePopup = new PopupWithForm('#edit-profile-popup', '.popup__close-image', '.popup__save-button', formProfileSubmit);
-addProfilePopup.generateForm();
-addProfilePopup.setEventListeners();
 
 const openProfileValidator = new FormValidator(validationConfig, document.querySelector('#edit-profile-container'));
 
@@ -62,7 +63,31 @@ const openProfilePopup = () => {
 
 buttonOpenPopup.addEventListener("click", openProfilePopup);
 
-//const avatarForm = new PopupWithAvatar('#popup-with-avatar', '#add-place-popup-close-image', '.popup__save-button')
+const buttonOpenAvatarForm = document.querySelector('.profile-info__change-avatar-button')
+const avatarForm = new PopupWithForm('#popup-with-avatar', '#add-place-popup-close-image', '.popup__save-button', formAvatarSubmit, 'Сохранить');
+avatarForm.generateForm();
+avatarForm.setEventListeners();
+const openAvatarPopup = () => {
+    avatarForm.reset();
+    avatarForm.open()
+}
+buttonOpenAvatarForm.addEventListener("click", openAvatarPopup);
+function formAvatarSubmit(data) {
+    api.postNewAvatar(data)
+        .then((res) => {
+            if(res.ok) {
+                userInfo.setUserAvatar(data);
+                return;
+            }
+            return Promise.reject(`Что-то пошло не так: ${res.status}`);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            avatarForm.close();
+        })
+}
 
 //карточки из массива
 const popupWithImage = new PopupWithImage('.popup__image-popup',
@@ -88,28 +113,33 @@ const loadCards = () => {
     api.getAllCards()
     .then(cardsArray => {
         cardsArray.forEach((item) => {
-            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID).createElement();
+            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, api.like.bind(api), api.removeLike.bind(api)).createElement();
             cardsSection.addItem(newElement);
         })
     })
 }
 
-const popupWithSubmit = new PopupWithSubmit('#delete-button-popup',
+const confirmDeleteCardPopup = new PopupWithSubmit('#delete-button-popup',
                                             '#image-popup-close-button', 
                                             '.popup__delete-yes');
 
-popupWithSubmit.setEventListeners();
+confirmDeleteCardPopup.setEventListeners();
 const handleDeleteClick = (id) => {
-    popupWithSubmit.setSubmitAction(() => {
+    confirmDeleteCardPopup.setSubmitAction(() => {
         api.deleteCard(id)
             .then((res) => {
                 if (res.ok) {
-                    loadCards()
+                    loadCards();
+                    return;
                 }
+                return Promise.reject(`Что-то пошло не так: ${res.status}`);
             })
-        popupWithSubmit.close()
+            .catch((err) => {
+                console.log(err);
+            })
+        confirmDeleteCardPopup.close()
     });
-    popupWithSubmit.open();
+    confirmDeleteCardPopup.open();
 }
 
 
@@ -119,9 +149,8 @@ Promise.all([api.getUserInfo(), api.getAllCards()])
         profile.querySelector('.profile-info__kusto').src = data.avatar;
         profile.querySelector('.caption__name').textContent = data.name;
         profile.querySelector('.captions__paragraph').textContent = data.about;
-
         cardsArray.forEach((item) => {
-            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID).createElement();
+            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, api.like.bind(api), api.removeLike.bind(api)).createElement();
             cardsSection.addItem(newElement);
         })
     })
@@ -132,18 +161,26 @@ Promise.all([api.getUserInfo(), api.getAllCards()])
 
 // обработка попапа 'добавить место'
 
-const formSubmitAddPlace = (item) => {
+const addPlacePopup = new PopupWithForm('#add-place-popup', '#add-place-popup-close-image', '.popup__save-button', formSubmitAddPlace, 'Создать');
+addPlacePopup.generateForm();
+addPlacePopup.setEventListeners();
+
+function formSubmitAddPlace(item) {
     api.postNewCard(item)
         .then((res) => {
             if (res.ok) {
                 loadCards();
+                return;
             }
+            return Promise.reject(`Что-то пошло не так: ${res.status}`);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            addPlacePopup.close();
         })
 };
-
-const addPlacePopup = new PopupWithForm('#add-place-popup', '#add-place-popup-close-image', '.popup__save-button', formSubmitAddPlace);
-addPlacePopup.generateForm();
-addPlacePopup.setEventListeners();
 
 const addPlaceValidator = new FormValidator(validationConfig, document.querySelector('#add-place-container'));
 
