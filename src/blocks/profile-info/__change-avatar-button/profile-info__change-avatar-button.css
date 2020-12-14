@@ -1,0 +1,6 @@
+.profile-info__change-avatar-button {
+    visibility: hidden;
+    opacity: 0;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+}

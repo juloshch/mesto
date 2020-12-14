@@ -30,4 +30,30 @@ export class Api {
             })
         });
     }
+
+    postNewCard(info) {
+        return fetch(this._url + 'cards', {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: info.name,
+                link: info.link
+            })
+        });
+    }
+
+    deleteCard(id) {
+        // console.log('deleted id: ' + id);
+        return fetch(this._url + 'cards/' + id, {
+            method: 'DELETE',
+            headers: this._headers,
+        });
+    }
+
+    // changeAvatar() {
+    //     return fetch(this._url + 'users/me/' + avatar, {
+    //         method: 'PATCH',
+    //         headers: this._headers,
+    //     })
+    // }
 }

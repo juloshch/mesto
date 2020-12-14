@@ -7,6 +7,7 @@
     background-size: contain;
     background-position: center;
     width: 21px;
+    height: 20px;
 }
 
 .element__heart:hover {

@@ -7,6 +7,8 @@ import { PopupWithForm } from '../components/popupWithForm.js';
 import { UserInfo } from '../components/userInfo.js';
 import { PopupWithImage } from '../components/popupWithImage.js';
 import { Api } from './api.js';
+import { PopupWithSubmit } from '../components/popupWithSubmit.js';
+import { PopupWithAvatar } from '../components/popupWithAvatar.js';
 
 const api = new Api({
     url: "https://mesto.nomoreparties.co/v1/cohort-18/",
@@ -16,14 +18,11 @@ const api = new Api({
     }
 });
 
+
+
+let userID = undefined;
 const profile = document.querySelector('.profile');
-api.getUserInfo()
-    .then((data) => {
-        console.log(data);
-        profile.querySelector('.profile-info__kusto').src = data.avatar;
-        profile.querySelector('.caption__name').textContent = data.name;
-        profile.querySelector('.captions__paragraph').textContent = data.about;
-    });
+
 
 const buttonOpenPopup = document.querySelector(".edit-but");
 const buttonOpenAddPlacePopup = document.querySelector(".add-but");
@@ -37,7 +36,7 @@ const userInfo = new UserInfo({
 const formProfileSubmit = (data) => {
     api.updateUserInfo(data)
         .then((res) => {
-            if(res.ok) {
+            if (res.ok) {
                 userInfo.setUserInfo(data);
                 return;
             }
@@ -45,7 +44,7 @@ const formProfileSubmit = (data) => {
         })
         .catch((err) => {
             console.log(err);
-        }); 
+        });
 };
 
 const addProfilePopup = new PopupWithForm('#edit-profile-popup', '.popup__close-image', '.popup__save-button', formProfileSubmit);
@@ -63,6 +62,8 @@ const openProfilePopup = () => {
 
 buttonOpenPopup.addEventListener("click", openProfilePopup);
 
+//const avatarForm = new PopupWithAvatar('#popup-with-avatar', '#add-place-popup-close-image', '.popup__save-button')
+
 //карточки из массива
 const popupWithImage = new PopupWithImage('.popup__image-popup',
     '.popup__close-image',
@@ -75,29 +76,69 @@ popupWithImage.setEventListeners();
 const cardsSection = new Section({
     items: [],
     renderer: (item) => {
-        const card = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage)).createElement();
+        const card = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), userID).createElement();
         return card;
     }
 }, '.elements');
 
 cardsSection.renderItems();
 
-// fetch  карточек, 
-api.getAllCards()
+const loadCards = () => {
+    cardsSection.clear();
+    api.getAllCards()
     .then(cardsArray => {
         cardsArray.forEach((item) => {
-            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage)).createElement();
+            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID).createElement();
             cardsSection.addItem(newElement);
         })
     })
+}
 
+const popupWithSubmit = new PopupWithSubmit('#delete-button-popup',
+                                            '#image-popup-close-button', 
+                                            '.popup__delete-yes');
+
+popupWithSubmit.setEventListeners();
+const handleDeleteClick = (id) => {
+    popupWithSubmit.setSubmitAction(() => {
+        api.deleteCard(id)
+            .then((res) => {
+                if (res.ok) {
+                    loadCards()
+                }
+            })
+        popupWithSubmit.close()
+    });
+    popupWithSubmit.open();
+}
+
+
+Promise.all([api.getUserInfo(), api.getAllCards()])
+    .then(([data, cardsArray]) => {
+        userID = data._id;
+        profile.querySelector('.profile-info__kusto').src = data.avatar;
+        profile.querySelector('.caption__name').textContent = data.name;
+        profile.querySelector('.captions__paragraph').textContent = data.about;
+
+        cardsArray.forEach((item) => {
+            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID).createElement();
+            cardsSection.addItem(newElement);
+        })
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 
 
 // обработка попапа 'добавить место'
 
 const formSubmitAddPlace = (item) => {
-    const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage)).createElement();
-    cardsSection.addItem(newElement);
+    api.postNewCard(item)
+        .then((res) => {
+            if (res.ok) {
+                loadCards();
+            }
+        })
 };
 
 const addPlacePopup = new PopupWithForm('#add-place-popup', '#add-place-popup-close-image', '.popup__save-button', formSubmitAddPlace);
