@@ -116,7 +116,7 @@ const loadCards = () => {
     api.getAllCards()
     .then(cardsArray => {
         cardsArray.forEach((item) => {
-            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, api.like.bind(api), api.removeLike.bind(api)).createElement();
+            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, sendLike, sendUnlike).createElement();
             cardsSection.addItem(newElement);
         })
     })
@@ -146,8 +146,29 @@ const handleDeleteClick = (id) => {
 }
 
 
+function sendLike(id) {
+    api.like(id)
+        .then((res) => {
+            if (res.ok) {
+                return res.json()
+            }
+        })
+        .then((data) => {
+            this.processLikes(data.likes)
+        });
+}
 
-
+function sendUnlike(id) {
+    api.removeLike(id)
+        .then((res) => {
+            if (res.ok) {
+                return res.json()
+            }
+        })
+        .then ((data) => {
+            this.processLikes(data.likes)
+        });
+}
 
 Promise.all([api.getUserInfo(), api.getAllCards()])
     .then(([data, cardsArray]) => {
@@ -156,32 +177,12 @@ Promise.all([api.getUserInfo(), api.getAllCards()])
         profile.querySelector('.caption__name').textContent = data.name;
         profile.querySelector('.captions__paragraph').textContent = data.about;
         cardsArray.forEach((item) => {
-            const newCard = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, snd);
+            const newCard = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, sendLike, sendUnlike);
             const newElement = newCard.createElement();
-            const sendLike = (id) => {
-                api.like(id)
-                    .then((res) => {
-                        if (res.ok) {
-                            return res.json()
-                        }
-                    })
-                    .then ((data) => {
-                        newCard.processLikes(data.likes)
-                    });
-            }
-            const sendUnlike = (id) => {
-                api.removeLike(id)
-                    .then((res) => {
-                        if (res.ok) {
-                            return res.json()
-                        }
-                    })
-                    .then ((data) => {
-                        newCard.processLikes(data.likes)
-                    });
-            }
-            newCard.setSendLike(sendLike);
-            newCard.setSendUnlike(sendUnlike);
+            
+            
+            // newCard.setSendLike(sendLike);
+            // newCard.setSendUnlike(sendUnlike);
 
             cardsSection.addItem(newElement);
         })

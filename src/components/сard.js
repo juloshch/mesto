@@ -1,5 +1,5 @@
 export class Card {
-    constructor(data, cardTemplate, handleCardClick, handleDeleteClick, userID) {
+    constructor(data, cardTemplate, handleCardClick, handleDeleteClick, userID, sendLike, sendUnlike) {
         this._data = data;
         this._cardTemplate = cardTemplate;
         this._handleCardClick = handleCardClick;
@@ -7,6 +7,8 @@ export class Card {
         this._ownerID = this._data.owner._id;
         this._userID = userID;
         this._isLiked = false;
+        this._sendLike = sendLike.bind(this);
+        this._sendUnlike = sendUnlike.bind(this);
         this._createElement();
         this.processLikes(data.likes, userID);
     }
@@ -21,15 +23,16 @@ export class Card {
         this.setLikesCount(this._likesCount);
     }
 
-    setSendLike = (sendLike) => {
-        this._sendLike = sendLike;
-    }
+    // setSendLike = (sendLike) => {
+    //     this._sendLike = sendLike;
+    // }
 
-    setSendUnlike = (sendUnlike) => {
-        this._sendUnlike = sendUnlike;
-    }
+    // setSendUnlike = (sendUnlike) => {
+    //     this._sendUnlike = sendUnlike;
+    // }
     
-    _handleLikeIcon = (evt) => {
+    _handleLikeIcon = () => {
+        // console.log(this)
         if (!this._isLiked) {
             this._sendLike(this._data._id);
         }
