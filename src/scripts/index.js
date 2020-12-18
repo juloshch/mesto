@@ -56,6 +56,7 @@ const openProfileValidator = new FormValidator(validationConfig, document.queryS
 
 const openProfilePopup = () => {
     const formData = userInfo.getUserInfo();
+    openProfileValidator.enableValidation();
     addProfilePopup.fillInputValues(formData);
     openProfileValidator.validateInputs();
     addProfilePopup.open();
@@ -63,12 +64,14 @@ const openProfilePopup = () => {
 
 buttonOpenPopup.addEventListener("click", openProfilePopup);
 
+const avatarFormValidator = new FormValidator(validationConfig, document.querySelector('#avatar-container'));
 const buttonOpenAvatarForm = document.querySelector('.profile-info__change-avatar-button')
 const avatarForm = new PopupWithForm('#popup-with-avatar', '#add-place-popup-close-image', '.popup__save-button', formAvatarSubmit, 'Сохранить');
 avatarForm.generateForm();
 avatarForm.setEventListeners();
 const openAvatarPopup = () => {
     avatarForm.reset();
+    avatarFormValidator.enableValidation();
     avatarForm.open()
 }
 buttonOpenAvatarForm.addEventListener("click", openAvatarPopup);
@@ -143,6 +146,9 @@ const handleDeleteClick = (id) => {
 }
 
 
+
+
+
 Promise.all([api.getUserInfo(), api.getAllCards()])
     .then(([data, cardsArray]) => {
         userID = data._id;
@@ -150,7 +156,33 @@ Promise.all([api.getUserInfo(), api.getAllCards()])
         profile.querySelector('.caption__name').textContent = data.name;
         profile.querySelector('.captions__paragraph').textContent = data.about;
         cardsArray.forEach((item) => {
-            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, api.like.bind(api), api.removeLike.bind(api)).createElement();
+            const newCard = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, snd);
+            const newElement = newCard.createElement();
+            const sendLike = (id) => {
+                api.like(id)
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json()
+                        }
+                    })
+                    .then ((data) => {
+                        newCard.processLikes(data.likes)
+                    });
+            }
+            const sendUnlike = (id) => {
+                api.removeLike(id)
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json()
+                        }
+                    })
+                    .then ((data) => {
+                        newCard.processLikes(data.likes)
+                    });
+            }
+            newCard.setSendLike(sendLike);
+            newCard.setSendUnlike(sendUnlike);
+
             cardsSection.addItem(newElement);
         })
     })
@@ -186,6 +218,7 @@ const addPlaceValidator = new FormValidator(validationConfig, document.querySele
 
 const openAddPlacePopup = () => {
     addPlacePopup.reset();
+    addPlaceValidator.enableValidation();
     addPlaceValidator.disableSubmitButton();
     addPlaceValidator.hideAllErrors();
     addPlacePopup.open();
@@ -194,16 +227,14 @@ const openAddPlacePopup = () => {
 buttonOpenAddPlacePopup.addEventListener("click", openAddPlacePopup);
 
 // валидация
-const enableValidation = (parameters) => {
+const preventDefaultAll = (parameters) => {
     const formList = Array.from(document.querySelectorAll(parameters.formSelector));
 
     formList.forEach((formElement) => {
         formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
         });
-
-        new FormValidator(parameters, formElement).enableValidation();
     });
 }
 
-enableValidation(validationConfig);
+preventDefaultAll(validationConfig);

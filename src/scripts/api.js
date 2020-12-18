@@ -4,13 +4,19 @@ export class Api {
         this._headers = config.headers;
     }
 
+    _checkedResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+
     getUserInfo() {
         return fetch(this._url + 'users/me', {
             method: 'GET',
             headers: this._headers
         })
-            .then(res => res.json())
-            // .then(res => console.log(res))
+            .then(res => this._checkedResponse(res))
     }
 
     getAllCards() {
@@ -18,7 +24,7 @@ export class Api {
             method: "GET",
             headers: this._headers
         })
-            .then(res => res.json())
+            .then(res => this._checkedResponse(res))
     }
 
     updateUserInfo(info) {
@@ -74,10 +80,5 @@ export class Api {
         })
     }
 
-    // changeAvatar() {
-    //     return fetch(this._url + 'users/me/' + avatar, {
-    //         method: 'PATCH',
-    //         headers: this._headers,
-    //     })
-    // }
+    
 }
