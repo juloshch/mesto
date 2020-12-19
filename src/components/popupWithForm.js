@@ -6,19 +6,10 @@ export class PopupWithForm extends Popup {
         this._handleFormSubmit = handleFormSubmit;
         this._submitButtonSelector = submitButtonSelector;
         this._submitButtonText = submitButtonText;
-    }
-
-    _getTemplate() {
-        const formElement = this._popup.querySelector('.popup__container');
-        return formElement;
-    } 
-
-    generateForm() {
-        this._element = this._getTemplate();  
+        this._element = this._popup.querySelector('.popup__container');
         this._submitButton = this._element.querySelector(this._submitButtonSelector);
         this._inputList = this._element.querySelectorAll('.popup__field');
-        return this._element;
-    } 
+    }
 
     _getInputValues() {
         this._formValues = {};
@@ -49,11 +40,7 @@ export class PopupWithForm extends Popup {
     }
 
     reset() {
-        if (this._inputList) {
-            this._inputList.forEach(input => {
-                input.value = '';
-            });
-        }
+        this._element.reset();
     }
 
     open() {

@@ -4,13 +4,19 @@ export class Api {
         this._headers = config.headers;
     }
 
+    _checkedResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+
     getUserInfo() {
         return fetch(this._url + 'users/me', {
             method: 'GET',
             headers: this._headers
         })
-            .then(res => res.json())
-            // .then(res => console.log(res))
+            .then(res => this._checkedResponse(res))
     }
 
     getAllCards() {
@@ -18,7 +24,7 @@ export class Api {
             method: "GET",
             headers: this._headers
         })
-            .then(res => res.json())
+            .then(res => this._checkedResponse(res))
     }
 
     updateUserInfo(info) {
@@ -29,7 +35,8 @@ export class Api {
                 name: info.name,
                 about: info.about
             })
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     postNewAvatar(info) {
@@ -39,7 +46,8 @@ export class Api {
             body: JSON.stringify({
                 avatar: info.link
             })
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     postNewCard(info) {
@@ -50,14 +58,16 @@ export class Api {
                 name: info.name,
                 link: info.link
             })
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     deleteCard(id) {
         return fetch(this._url + 'cards/' + id, {
             method: 'DELETE',
             headers: this._headers,
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     like(id) {
@@ -65,6 +75,7 @@ export class Api {
             method: 'PUT',
             headers: this._headers,
         })
+        .then(res => this._checkedResponse(res))
     }
 
     removeLike(id) {
@@ -72,12 +83,8 @@ export class Api {
             method: 'DELETE',
             headers: this._headers,
         })
+        .then(res => this._checkedResponse(res))
     }
 
-    // changeAvatar() {
-    //     return fetch(this._url + 'users/me/' + avatar, {
-    //         method: 'PATCH',
-    //         headers: this._headers,
-    //     })
-    // }
+    
 }
