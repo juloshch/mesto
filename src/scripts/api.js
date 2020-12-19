@@ -35,7 +35,8 @@ export class Api {
                 name: info.name,
                 about: info.about
             })
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     postNewAvatar(info) {
@@ -45,7 +46,8 @@ export class Api {
             body: JSON.stringify({
                 avatar: info.link
             })
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     postNewCard(info) {
@@ -56,14 +58,16 @@ export class Api {
                 name: info.name,
                 link: info.link
             })
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     deleteCard(id) {
         return fetch(this._url + 'cards/' + id, {
             method: 'DELETE',
             headers: this._headers,
-        });
+        })
+        .then(res => this._checkedResponse(res))
     }
 
     like(id) {
@@ -71,6 +75,7 @@ export class Api {
             method: 'PUT',
             headers: this._headers,
         })
+        .then(res => this._checkedResponse(res))
     }
 
     removeLike(id) {
@@ -78,6 +83,7 @@ export class Api {
             method: 'DELETE',
             headers: this._headers,
         })
+        .then(res => this._checkedResponse(res))
     }
 
     

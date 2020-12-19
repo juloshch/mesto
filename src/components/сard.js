@@ -22,17 +22,8 @@ export class Card {
         this._likesCount = likes.length;
         this.setLikesCount(this._likesCount);
     }
-
-    // setSendLike = (sendLike) => {
-    //     this._sendLike = sendLike;
-    // }
-
-    // setSendUnlike = (sendUnlike) => {
-    //     this._sendUnlike = sendUnlike;
-    // }
     
     _handleLikeIcon = () => {
-        // console.log(this)
         if (!this._isLiked) {
             this._sendLike(this._data._id);
         }
@@ -66,6 +57,7 @@ export class Card {
         likeButton.addEventListener('click', this._handleLikeIcon.bind(this));
         elementPic.addEventListener('click', () => this._handleCardClick(this._data));       
         this._cardElement = cardElement.querySelector(".element");
+        this._cardElement.id = this._data._id;
     }
 
     createElement() {

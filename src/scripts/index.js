@@ -32,23 +32,16 @@ const userInfo = new UserInfo({
 
 
 const addProfilePopup = new PopupWithForm('#edit-profile-popup', '.popup__close-image', '.popup__save-button', formProfileSubmit, 'Сохранить');
-addProfilePopup.generateForm();
 addProfilePopup.setEventListeners();
 
 function formProfileSubmit(data) {
     api.updateUserInfo(data)
-        .then((res) => {
-            if (res.ok) {
-                userInfo.setUserInfo(data);
-                return;
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
+        .then((responseData) => {
+            userInfo.setUserInfo(data);
+            addProfilePopup.close();
         })
         .catch((err) => {
             console.log(err);
-        })
-        .finally(() =>{
-            addProfilePopup.close();
         })
 };
 
@@ -67,7 +60,6 @@ buttonOpenPopup.addEventListener("click", openProfilePopup);
 const avatarFormValidator = new FormValidator(validationConfig, document.querySelector('#avatar-container'));
 const buttonOpenAvatarForm = document.querySelector('.profile-info__change-avatar-button')
 const avatarForm = new PopupWithForm('#popup-with-avatar', '#add-place-popup-close-image', '.popup__save-button', formAvatarSubmit, 'Сохранить');
-avatarForm.generateForm();
 avatarForm.setEventListeners();
 const openAvatarPopup = () => {
     avatarForm.reset();
@@ -77,18 +69,13 @@ const openAvatarPopup = () => {
 buttonOpenAvatarForm.addEventListener("click", openAvatarPopup);
 function formAvatarSubmit(data) {
     api.postNewAvatar(data)
-        .then((res) => {
-            if(res.ok) {
-                userInfo.setUserAvatar(data);
-                return;
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
+        .then((resesponseData) => {
+            userInfo.setUserAvatar(data);
+            avatarForm.close();
+
         })
         .catch((err) => {
             console.log(err);
-        })
-        .finally(() => {
-            avatarForm.close();
         })
 }
 
@@ -109,38 +96,20 @@ const cardsSection = new Section({
     }
 }, '.elements');
 
-cardsSection.renderItems();
-
-const loadCards = () => {
-    cardsSection.clear();
-    api.getAllCards()
-    .then(cardsArray => {
-        cardsArray.forEach((item) => {
-            const newElement = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, sendLike, sendUnlike).createElement();
-            cardsSection.addItem(newElement);
-        })
-    })
-}
-
 const confirmDeleteCardPopup = new PopupWithSubmit('#delete-button-popup',
-                                            '#image-popup-close-button', 
-                                            '.popup__delete-yes');
+    '#image-popup-close-button');
 
 confirmDeleteCardPopup.setEventListeners();
 const handleDeleteClick = (id) => {
     confirmDeleteCardPopup.setSubmitAction(() => {
         api.deleteCard(id)
-            .then((res) => {
-                if (res.ok) {
-                    loadCards();
-                    return;
-                }
-                return Promise.reject(`Что-то пошло не так: ${res.status}`);
+            .then((responseData) => {
+                document.getElementById(id).remove();
+                confirmDeleteCardPopup.close()
             })
             .catch((err) => {
                 console.log(err);
             })
-        confirmDeleteCardPopup.close()
     });
     confirmDeleteCardPopup.open();
 }
@@ -148,42 +117,28 @@ const handleDeleteClick = (id) => {
 
 function sendLike(id) {
     api.like(id)
-        .then((res) => {
-            if (res.ok) {
-                return res.json()
-            }
-        })
-        .then((data) => {
-            this.processLikes(data.likes)
+        .then((responseData) => {
+            this.processLikes(responseData.likes)
         });
 }
 
 function sendUnlike(id) {
     api.removeLike(id)
-        .then((res) => {
-            if (res.ok) {
-                return res.json()
-            }
-        })
-        .then ((data) => {
-            this.processLikes(data.likes)
+        .then((responseData) => {
+            this.processLikes(responseData.likes)
         });
 }
 
 Promise.all([api.getUserInfo(), api.getAllCards()])
     .then(([data, cardsArray]) => {
         userID = data._id;
-        profile.querySelector('.profile-info__kusto').src = data.avatar;
-        profile.querySelector('.caption__name').textContent = data.name;
-        profile.querySelector('.captions__paragraph').textContent = data.about;
+        userInfo.setUserAvatar({
+            link: data.avatar
+        });
+        userInfo.setUserInfo(data);
         cardsArray.forEach((item) => {
             const newCard = new Card(item, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, sendLike, sendUnlike);
             const newElement = newCard.createElement();
-            
-            
-            // newCard.setSendLike(sendLike);
-            // newCard.setSendUnlike(sendUnlike);
-
             cardsSection.addItem(newElement);
         })
     })
@@ -195,23 +150,18 @@ Promise.all([api.getUserInfo(), api.getAllCards()])
 // обработка попапа 'добавить место'
 
 const addPlacePopup = new PopupWithForm('#add-place-popup', '#add-place-popup-close-image', '.popup__save-button', formSubmitAddPlace, 'Создать');
-addPlacePopup.generateForm();
 addPlacePopup.setEventListeners();
 
 function formSubmitAddPlace(item) {
     api.postNewCard(item)
-        .then((res) => {
-            if (res.ok) {
-                loadCards();
-                return;
-            }
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
+        .then((responseData) => {
+            const newCard = new Card(responseData, cardTemplate, popupWithImage.open.bind(popupWithImage), handleDeleteClick, userID, sendLike, sendUnlike);
+            const newElement = newCard.createElement();
+            cardsSection.prependItem(newElement);
+            addPlacePopup.close();
         })
         .catch((err) => {
             console.log(err);
-        })
-        .finally(() => {
-            addPlacePopup.close();
         })
 };
 
