@@ -18,7 +18,6 @@ const api = new Api({
 });
 
 let userID = undefined;
-const profile = document.querySelector('.profile');
 
 const buttonOpenPopup = document.querySelector(".edit-but");
 const buttonOpenAddPlacePopup = document.querySelector(".add-but");
@@ -46,24 +45,24 @@ function formProfileSubmit(data) {
 };
 
 const openProfileValidator = new FormValidator(validationConfig, document.querySelector('#edit-profile-container'));
+openProfileValidator.enableValidation();
 
 const openProfilePopup = () => {
     const formData = userInfo.getUserInfo();
-    openProfileValidator.enableValidation();
     addProfilePopup.fillInputValues(formData);
     openProfileValidator.validateInputs();
     addProfilePopup.open();
 };
-
 buttonOpenPopup.addEventListener("click", openProfilePopup);
 
 const avatarFormValidator = new FormValidator(validationConfig, document.querySelector('#avatar-container'));
+avatarFormValidator.enableValidation();
+
 const buttonOpenAvatarForm = document.querySelector('.profile-info__change-avatar-button')
 const avatarForm = new PopupWithForm('#popup-with-avatar', '#add-place-popup-close-image', '.popup__save-button', formAvatarSubmit, 'Сохранить');
 avatarForm.setEventListeners();
 const openAvatarPopup = () => {
     avatarForm.reset();
-    avatarFormValidator.enableValidation();
     avatarForm.open()
 }
 buttonOpenAvatarForm.addEventListener("click", openAvatarPopup);
@@ -100,12 +99,12 @@ const confirmDeleteCardPopup = new PopupWithSubmit('#delete-button-popup',
     '#image-popup-close-button');
 
 confirmDeleteCardPopup.setEventListeners();
-const handleDeleteClick = (id) => {
+const handleDeleteClick = (card, id) => {
     confirmDeleteCardPopup.setSubmitAction(() => {
         api.deleteCard(id)
             .then((responseData) => {
-                document.getElementById(id).remove();
-                confirmDeleteCardPopup.close()
+                card.remove();
+                confirmDeleteCardPopup.close();
             })
             .catch((err) => {
                 console.log(err);
@@ -119,14 +118,20 @@ function sendLike(id) {
     api.like(id)
         .then((responseData) => {
             this.processLikes(responseData.likes)
-        });
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
 
 function sendUnlike(id) {
     api.removeLike(id)
         .then((responseData) => {
             this.processLikes(responseData.likes)
-        });
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
 
 Promise.all([api.getUserInfo(), api.getAllCards()])
@@ -166,10 +171,10 @@ function formSubmitAddPlace(item) {
 };
 
 const addPlaceValidator = new FormValidator(validationConfig, document.querySelector('#add-place-container'));
+addPlaceValidator.enableValidation();
 
 const openAddPlacePopup = () => {
     addPlacePopup.reset();
-    addPlaceValidator.enableValidation();
     addPlaceValidator.disableSubmitButton();
     addPlaceValidator.hideAllErrors();
     addPlacePopup.open();
