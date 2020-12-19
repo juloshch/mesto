@@ -1,12 +1,12 @@
 import '../pages/index.css';
-import { validationConfig } from './data.js';
+import { validationConfig } from '../scripts/data.js';
 import { Card } from '../components/сard.js';
-import { FormValidator } from './FormValidator.js';
+import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/section.js';
 import { PopupWithForm } from '../components/popupWithForm.js';
 import { UserInfo } from '../components/userInfo.js';
 import { PopupWithImage } from '../components/popupWithImage.js';
-import { Api } from './api.js';
+import { Api } from '../components/api.js';
 import { PopupWithSubmit } from '../components/popupWithSubmit.js';
 
 const api = new Api({
