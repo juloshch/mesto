@@ -36,7 +36,7 @@ export class Card {
         if (this._userID === this._ownerID) {
             const currentDeleteButton = cardElement.querySelector(".element__bin-button");
             currentDeleteButton.classList.remove('elememt__bin-button_hidden');
-            currentDeleteButton.addEventListener('click', () => this._handleDeleteClick(this._data._id));
+            currentDeleteButton.addEventListener('click', () => this._handleDeleteClick(this, this._data._id));
         }
     }
 
@@ -44,6 +44,10 @@ export class Card {
         if (this._cardElement) {
             this._cardElement.querySelector('.element__likes').textContent = count;
         }
+    }
+
+    remove() {
+        this._cardElement.remove();
     }
 
     _createElement() {
